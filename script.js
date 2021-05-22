@@ -1,7 +1,7 @@
 const expenseInput = document.querySelector('#expense');
 const amountInput = document.querySelector('#amount');
 const dateInput = document.querySelector('#date');
-const storeInput = document.querySelector('#store');
+const locationInput = document.querySelector('#store');
 const table = document.querySelector('#expensetable');
 let expenseArray = JSON.parse(localStorage.getItem('expenseArray')) || [];
 
@@ -11,7 +11,7 @@ function drawTable(e) {
     !expenseInput.value ||
     !amountInput.value ||
     !dateInput.value ||
-    !storeInput.value
+    !locationInput.value
   ) {
     alert('Please fill out all input fields before submitting. ');
     return;
@@ -24,11 +24,11 @@ function drawTable(e) {
     date: `${monthToCalendar(parseMonth(getDate()))} ${parseDate(
       getDate()
     )}, ${parseYear(getDate())}`,
-    location: storeInput.value
+    location: locationInput.value
   };
 
   addNewExpense(newExpense);
-  // document.getElementById('expenseForm').reset();
+  document.getElementById('expenseForm').reset();
 }
 
 function addNewExpense(expense) {
@@ -109,14 +109,10 @@ function deleteRow(deleteButton, id) {
 }
 
 function deleteLocalExpenses(id) {
-  for (let i = 0; i < expenseArray.length; i++) {
-    if (expenseArray[i].id === id) {
-      expenseArray = expenseArray.filter((item) => {
-        return item.id !== id;
-      });
-      pushToLocalStorage(expenseArray);
-    }
-  }
+  expenseArray = expenseArray.filter((item) => {
+    return item.id !== id;
+  });
+  pushToLocalStorage(expenseArray);
 }
 
 function buildTable(expense) {
